@@ -21,7 +21,6 @@ import java.util.TimerTask;
 import static com.mullachproject.projectquizapp.MainActivity.*;
 
 public class VB extends AppCompatActivity {
-    String tableName = "vbQuestion";
     private TextView questionNum;
     private TextView question;
     private AppCompatButton option1, option2, option3, option4;
@@ -57,24 +56,8 @@ public class VB extends AppCompatActivity {
             try {
                 questions = new ArrayList<>();
 
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-
-                Statement statement = connection.createStatement();
-                String query = "select * from " + tableName + " ORDER BY RAND() LIMIT 5";
-                ResultSet rs = statement.executeQuery(query);
-
-                while (rs.next()) {
-                    QuestionsList question = new QuestionsList(
-                            rs.getString("question"),
-                            rs.getString("option1"),
-                            rs.getString("option2"),
-                            rs.getString("option3"),
-                            rs.getString("option4"),
-                            rs.getString("answer"),
-                            rs.getString("userSelectedAnswer"));
-                    questions.add(question);
-                }
+                QuestionBank qbank = new QuestionBank();
+                questions = qbank.getVBQuestions();
 
                 int allQuestions = questions.size();
                 runOnUiThread(() -> {

@@ -21,7 +21,6 @@ import java.util.TimerTask;
 import static com.mullachproject.projectquizapp.MainActivity.*;
 
 public class Java extends AppCompatActivity {
-    String tableName = "javaQuestion";
     private TextView questionNum;
     private TextView question;
     private AppCompatButton option1, option2, option3, option4;
@@ -38,6 +37,7 @@ public class Java extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
 
+        //get button for questions and answer
         final ImageView backBtn = findViewById(R.id.ic_back);
         final TextView timer = findViewById(R.id.txt_timer);
         final TextView selectedTopicName = findViewById(R.id.txt_topic);
@@ -50,31 +50,18 @@ public class Java extends AppCompatActivity {
         nextBtn = findViewById(R.id.btn_next);
         selectedTopicName.setText("JAVA");
 
+        //call timer
         startTimer(timer);
 
 
         new Thread(() -> {
+            //try and catch
             try {
                 questions = new ArrayList<>();
+                //get guestions from QuestionBank
+                QuestionBank qbank = new QuestionBank();
+                questions = qbank.getJavaQuestions();
 
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-
-                Statement statement = connection.createStatement();
-                String query = "select * from " + tableName + " ORDER BY RAND() LIMIT 5";
-                ResultSet rs = statement.executeQuery(query);
-
-                while (rs.next()) {
-                    QuestionsList question = new QuestionsList(
-                            rs.getString("question"),
-                            rs.getString("option1"),
-                            rs.getString("option2"),
-                            rs.getString("option3"),
-                            rs.getString("option4"),
-                            rs.getString("answer"),
-                            rs.getString("userSelectedAnswer"));
-                    questions.add(question);
-                }
 
                 int allQuestions = questions.size();
                 runOnUiThread(() -> {
@@ -163,6 +150,7 @@ public class Java extends AppCompatActivity {
             }
         });
 
+        //if back button is pressed, timer will stop and will go back to main page
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +163,7 @@ public class Java extends AppCompatActivity {
 
     }
 
+    //for each question
     private void changeNextQuestion() {
         currentQuestionPosition++;
         if ((currentQuestionPosition + 1) == questions.size()) {
@@ -212,6 +201,7 @@ public class Java extends AppCompatActivity {
         }
     }
 
+    //method to start timer
     private void startTimer(TextView timerTextView) {
         quizTimer = new Timer();
 
@@ -239,6 +229,7 @@ public class Java extends AppCompatActivity {
                     seconds--;
                 }
 
+                //add some extra operations on UI, do back ground operations on worker thread and update the result on main thread
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -262,22 +253,21 @@ public class Java extends AppCompatActivity {
         }, 1000, 1000);
     }
 
+    //get correct answer and update correct answer's count
     private int getCorrectAnswers() {
         int correctAnswers = 0;
 
-        //CEK DARI QUESTIONLIST
         for (int i = 0; i < questions.size(); i++) {
             final String getUserSelectedAnswer = questions.get(i).getUserSelectedAnswer();
             final String getAnswer = questions.get(i).getAnswer();
 
             if (getUserSelectedAnswer.equals(getAnswer)) {
                 correctAnswers++;
-
             }
         }
         return correctAnswers;
     }
-
+    //get correct answer and update incorrect answer's count
     private int getIncorrectAnswers() {
         int incorrectAnswers = 0;
 
@@ -302,6 +292,7 @@ public class Java extends AppCompatActivity {
         finish();
     }
 
+    //
     private void revealAnswer() {
         final String getAnswer = questions.get(currentQuestionPosition).getAnswer();
 
