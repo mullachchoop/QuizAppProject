@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
-public class Theme extends AppCompatActivity{
+public class Theme extends AppCompatActivity{    // defines the Theme class, which extends the AppCompatActivity class
     SwitchCompat switchMode;
     boolean nightMode;
 
@@ -20,7 +20,7 @@ public class Theme extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);  // overridden to set to the layout for the activity, get references to the SwitchCompat and Button views
         setContentView(R.layout.activity_theme);
 
         switchMode = findViewById(R.id.switchMode);
@@ -30,6 +30,7 @@ public class Theme extends AppCompatActivity{
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightMode = sharedPreferences.getBoolean("nightMode", false);
+        // sets the nightMode variable  to the boolean value stored under the nightMode value
 
         if (nightMode){
             switchMode.setChecked(true);

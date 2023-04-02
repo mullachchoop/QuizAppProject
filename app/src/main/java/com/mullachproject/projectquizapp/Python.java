@@ -21,6 +21,7 @@ import java.util.TimerTask;
 import static com.mullachproject.projectquizapp.MainActivity.*;
 
 public class Python extends AppCompatActivity {
+    // intialization
     private TextView questionNum;
     private TextView question;
     private AppCompatButton option1, option2, option3, option4;
@@ -28,15 +29,18 @@ public class Python extends AppCompatActivity {
     private Timer quizTimer;
     private int totalTimeInMins = 1;
     private int seconds = 0;
-    private ArrayList<QuestionsList> questions;
+    private ArrayList<QuestionsList> questions; // initialize questions as QuestionsList which saved as arraylist
     private int currentQuestionPosition = 0;
     private String selectedOptionByUser = "";
 
+    // Overrides the oncreate method of the appcompatactivity class.
+    // It sees the content view of the activty to the xml.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_python);
 
+        // Initialize the variables by their corresponding IDs
         final ImageView backBtn = findViewById(R.id.ic_back);
         final TextView timer = findViewById(R.id.txt_timer);
         final TextView selectedTopicName = findViewById(R.id.txt_topic);
@@ -47,28 +51,29 @@ public class Python extends AppCompatActivity {
         option3 = findViewById(R.id.btn_opt3);
         option4 = findViewById(R.id.btn_opt4);
         nextBtn = findViewById(R.id.btn_next);
-        selectedTopicName.setText("PYTHON");
+        selectedTopicName.setText("PYTHON"); //display 'python' text
 
+        //call the start timer function which sets the timer for the quiz
         startTimer(timer);
-
 
         new Thread(() -> {
             try {
                 questions = new ArrayList<>();
 
+                // to call the questions stored in QuestionBank class
                 QuestionBank qbank = new QuestionBank();
-                questions = qbank.getPythonQuestions();
+                questions = qbank.getPythonQuestions(); // get the python questions from QuestionBank
 
                 int allQuestions = questions.size();
                 runOnUiThread(() -> {
-                    if (allQuestions > 0) {
+                    if (allQuestions > 0) {         //get the data of the questions and it's answer from database
                         questionNum.setText((currentQuestionPosition + 1) + "/" + allQuestions);
                         question.setText(questions.get(0).getQuestion());
                         option1.setText(questions.get(0).getOption1());
                         option2.setText(questions.get(0).getOption2());
                         option3.setText(questions.get(0).getOption3());
                         option4.setText(questions.get(0).getOption4());
-                    } else {
+                    } else {        //error checking. If the apps don't get the data from database, this part won't run
                         option1.setVisibility(View.INVISIBLE);
                         option2.setVisibility(View.INVISIBLE);
                         option3.setVisibility(View.INVISIBLE);
@@ -82,11 +87,12 @@ public class Python extends AppCompatActivity {
             }
         }).start();
 
-
+        // For the option 1
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (selectedOptionByUser.isEmpty()) {
+                    // turn the background to red if the option1 is wrong
                     selectedOptionByUser = option1.getText().toString();
                     option1.setBackgroundResource(R.drawable.wrong_bg_red);
                     option1.setTextColor(Color.WHITE);
@@ -96,6 +102,7 @@ public class Python extends AppCompatActivity {
             }
         });
 
+        // For option 2
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,17 +142,20 @@ public class Python extends AppCompatActivity {
             }
         });
 
+        // Next button
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the selectedOptionByUser is empty, the application will toast a  message
                 if (selectedOptionByUser.isEmpty()) {
                     Toast.makeText(Python.this, "Please select an option", Toast.LENGTH_SHORT).show();
-                } else {
+                } else { // change to the next question if user has selected an answer
                     changeNextQuestion();
                 }
             }
         });
 
+        // Back Button - return to the main activity class
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,12 +168,14 @@ public class Python extends AppCompatActivity {
 
     }
 
+    //This section is to change to the next question
     private void changeNextQuestion() {
         currentQuestionPosition++;
         if ((currentQuestionPosition + 1) == questions.size()) {
             nextBtn.setText("Submit Quiz");
         }
 
+        // as long as still within the array size, this part of code will be implemented
         if (currentQuestionPosition < questions.size()) {
             selectedOptionByUser = "";
 
@@ -187,6 +199,7 @@ public class Python extends AppCompatActivity {
             option4.setText(questions.get(currentQuestionPosition).getOption4());
 
         } else {
+            // this part will display the correct and incorrect answer that the user get
             Intent intent = new Intent(Python.this, QuizResults.class);
             intent.putExtra("correct", getCorrectAnswers());
             intent.putExtra("incorrect", getIncorrectAnswers());
@@ -195,13 +208,14 @@ public class Python extends AppCompatActivity {
         }
     }
 
+    // whenever the user click on this button, this section will start
     private void startTimer(TextView timerTextView) {
         quizTimer = new Timer();
 
         quizTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-
+                // If the timer has reached 00:00, 'time over' will be displayed
                 if (seconds == 0 && totalTimeInMins == 0) {
                     quizTimer.purge();
                     quizTimer.cancel();
@@ -226,7 +240,6 @@ public class Python extends AppCompatActivity {
                     @Override
                     public void run() {
 
-
                         String finalMinutes = String.valueOf(totalTimeInMins);
                         String finalSeconds = String.valueOf(seconds);
 
@@ -245,10 +258,12 @@ public class Python extends AppCompatActivity {
         }, 1000, 1000);
     }
 
+    // calculating the correct answer
     private int getCorrectAnswers() {
         int correctAnswers = 0;
 
-        //CEK DARI QUESTIONLIST
+        //Check from the list. If user selected the same answer as the 'answer',
+        // it will add the correctanswer count
         for (int i = 0; i < questions.size(); i++) {
             final String getUserSelectedAnswer = questions.get(i).getUserSelectedAnswer();
             final String getAnswer = questions.get(i).getAnswer();
@@ -261,6 +276,8 @@ public class Python extends AppCompatActivity {
         return correctAnswers;
     }
 
+    //Check from the list. If user selected the different answer from the 'answer',
+    // it will add the incorrectanswer count
     private int getIncorrectAnswers() {
         int incorrectAnswers = 0;
 
@@ -275,6 +292,7 @@ public class Python extends AppCompatActivity {
         return incorrectAnswers;
     }
 
+    //return to the mainactivity and stop the timer
     @Override
     public void onBackPressed() {
 
@@ -285,6 +303,7 @@ public class Python extends AppCompatActivity {
         finish();
     }
 
+    // Calling this section will reveal the answer in green background
     private void revealAnswer() {
         final String getAnswer = questions.get(currentQuestionPosition).getAnswer();
 

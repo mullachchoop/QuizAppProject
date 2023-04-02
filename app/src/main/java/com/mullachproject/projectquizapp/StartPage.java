@@ -17,13 +17,17 @@ import com.mullachproject.projectquizapp.databinding.ActivityStartpageBinding;
 import java.util.ArrayList;
 
 public class StartPage extends AppCompatActivity {
+
+    // variable to initialize selected topic name
     private String selectedTopicName = "";
 
+    // contents in activity start page
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startpage);
 
+        //initialize name for buttons
         final ImageView java = findViewById(R.id.btn_Java);
         final ImageView c = findViewById(R.id.btn_c);
         final ImageView vb = findViewById(R.id.btn_vb);
@@ -32,6 +36,7 @@ public class StartPage extends AppCompatActivity {
         final ImageView music = findViewById(R.id.music);
         final ImageView theme = findViewById(R.id.theme);
 
+        // button that will lead to music class/activity
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +46,8 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
+        // button that will lead to theme class/activity
+        // user will be able to choose day or night theme
         theme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +57,8 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
+        // button java will lead to the java class and activity
+        // green color indicates selection
         java.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -61,7 +70,8 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
-
+        // button c++ will lead to the c++ class and activity
+        // green color indicates selection
         c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -75,7 +85,8 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
-
+        // button visual basic will lead to the visual basic class and activity
+        // green color indicates selection
         vb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -87,7 +98,8 @@ public class StartPage extends AppCompatActivity {
 
             }
         });
-
+        // button python will lead to the python class and activity
+        // green color indicates selection
         python.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -100,6 +112,7 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
+        // button start will lead to the selected class and activity
         startBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

@@ -1,9 +1,13 @@
 package com.mullachproject.projectquizapp;
 
 public class QuestionsList {
+    // attributes
     private String question, option1, option2, option3, option4, answer;
     private String userSelectedAnswer;
 
+    // methods
+
+    // constructors
     public QuestionsList(){
     }
 
@@ -17,6 +21,7 @@ public class QuestionsList {
         this.userSelectedAnswer = userSelectedAnswer;
     }
 
+    // setters and getters
     public String getQuestion(){
         return question;
     }

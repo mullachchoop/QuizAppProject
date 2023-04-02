@@ -58,10 +58,13 @@ public class CPlusPlus extends AppCompatActivity {
                 questions = new ArrayList<>();
 
                 QuestionBank qbank = new QuestionBank();
+                // Retrieve a list of question about C++ programming language
                 questions = qbank.getCPPQuestions();
 
                 int allQuestions = questions.size();
+                // Allows updating the user interface from the background thread
                 runOnUiThread(() -> {
+                    // Check if there any question in the 'questions'
                     if (allQuestions > 0) {
                         questionNum.setText((currentQuestionPosition + 1) + "/" + allQuestions);
                         question.setText(questions.get(0).getQuestion());
@@ -83,7 +86,7 @@ public class CPlusPlus extends AppCompatActivity {
             }
         }).start();
 
-
+        // If user choose wrong answers: background will turn to red and text color will turn to white, and reveal the correct answer
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +94,7 @@ public class CPlusPlus extends AppCompatActivity {
                     selectedOptionByUser = option1.getText().toString();
                     option1.setBackgroundResource(R.drawable.wrong_bg_red);
                     option1.setTextColor(Color.WHITE);
+                    // Reveal the correct answer
                     revealAnswer();
                     questions.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
                 }
@@ -104,6 +108,7 @@ public class CPlusPlus extends AppCompatActivity {
                     selectedOptionByUser = option2.getText().toString();
                     option2.setBackgroundResource(R.drawable.wrong_bg_red);
                     option2.setTextColor(Color.WHITE);
+                    // Reveal correct answer
                     revealAnswer();
                     questions.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
                 }
@@ -117,6 +122,7 @@ public class CPlusPlus extends AppCompatActivity {
                     selectedOptionByUser = option3.getText().toString();
                     option3.setBackgroundResource(R.drawable.wrong_bg_red);
                     option3.setTextColor(Color.WHITE);
+                    // Reveal correct answer
                     revealAnswer();
                     questions.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
                 }
@@ -130,12 +136,15 @@ public class CPlusPlus extends AppCompatActivity {
                     selectedOptionByUser = option4.getText().toString();
                     option4.setBackgroundResource(R.drawable.wrong_bg_red);
                     option4.setTextColor(Color.WHITE);
+                    // Reveal correct answer
                     revealAnswer();
                     questions.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
                 }
             }
         });
 
+        // Display error message if user does not choose any answer
+        // If user already choose the answer, then proceed to next question
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +156,7 @@ public class CPlusPlus extends AppCompatActivity {
             }
         });
 
+        // Cancel any scheduled timer once the user click the back button
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,8 +169,12 @@ public class CPlusPlus extends AppCompatActivity {
 
     }
 
+    //to update the UI and change questions
+    //change questions when user presses 'Next'
     private void changeNextQuestion() {
         currentQuestionPosition++;
+
+        //Check if the user has reached the last question in the quiz. If so, the "next" button text is changed to "Submit Quiz"
         if ((currentQuestionPosition + 1) == questions.size()) {
             nextBtn.setText("Submit Quiz");
         }
@@ -191,11 +205,12 @@ public class CPlusPlus extends AppCompatActivity {
             Intent intent = new Intent(CPlusPlus.this, QuizResults.class);
             intent.putExtra("correct", getCorrectAnswers());
             intent.putExtra("incorrect", getIncorrectAnswers());
-            startActivity(intent);
-            finish();
+            startActivity(intent); // Launch the activity
+            finish(); // Destroy the current activity
         }
     }
 
+    // Schedules a task to run every second
     private void startTimer(TextView timerTextView) {
         quizTimer = new Timer();
 
@@ -225,8 +240,8 @@ public class CPlusPlus extends AppCompatActivity {
 
                 runOnUiThread(new Runnable() {
                     @Override
+                    // Check if the timer has reached zero. If so, timer cancelled and move to quiz result page
                     public void run() {
-
 
                         String finalMinutes = String.valueOf(totalTimeInMins);
                         String finalSeconds = String.valueOf(seconds);
@@ -246,10 +261,12 @@ public class CPlusPlus extends AppCompatActivity {
         }, 1000, 1000);
     }
 
+    // Calculate and return number of correct answers
+    // Go through the list of questions and compares the user-selected answers with the actual answer
     private int getCorrectAnswers() {
         int correctAnswers = 0;
 
-        //CEK DARI QUESTIONLIST
+
         for (int i = 0; i < questions.size(); i++) {
             final String getUserSelectedAnswer = questions.get(i).getUserSelectedAnswer();
             final String getAnswer = questions.get(i).getAnswer();
@@ -262,6 +279,8 @@ public class CPlusPlus extends AppCompatActivity {
         return correctAnswers;
     }
 
+    // Calculate and return number of incorrect answers
+    // Go through the list of questions and compares the user-selected answers with the actual answer
     private int getIncorrectAnswers() {
         int incorrectAnswers = 0;
 
@@ -277,6 +296,9 @@ public class CPlusPlus extends AppCompatActivity {
     }
 
     @Override
+
+    //Timer is cancelled when back button is pressed
+    // User is taken back to the main screen when the back button was pressed
     public void onBackPressed() {
 
         quizTimer.purge();
@@ -286,9 +308,13 @@ public class CPlusPlus extends AppCompatActivity {
         finish();
     }
 
+    // Determines the correct answer
+    // Provide visual feedbacks on whether user has selected a correct answer on not
+    // If correct: Background color turns green
     private void revealAnswer() {
         final String getAnswer = questions.get(currentQuestionPosition).getAnswer();
 
+        // Check which option among the 4 options matches the correct answer
         if (option1.getText().toString().equals(getAnswer)) {
             option1.setBackgroundResource(R.drawable.correct_bg_green);
             option1.setTextColor(Color.WHITE);

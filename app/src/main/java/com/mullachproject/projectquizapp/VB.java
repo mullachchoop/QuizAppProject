@@ -158,6 +158,8 @@ public class VB extends AppCompatActivity {
 
     }
 
+    //to update the UI and change questions
+    //change questions when user presses 'Next'
     private void changeNextQuestion() {
         currentQuestionPosition++;
         if ((currentQuestionPosition + 1) == questions.size()) {
@@ -195,6 +197,9 @@ public class VB extends AppCompatActivity {
         }
     }
 
+    //timer that starts to count down when quiz starts
+    //display on screen, if time runs out, quiz ends
+    //when quiz ends, results will be displayed
     private void startTimer(TextView timerTextView) {
         quizTimer = new Timer();
 
@@ -245,6 +250,10 @@ public class VB extends AppCompatActivity {
         }, 1000, 1000);
     }
 
+    //used to get numbers of correct answers from lists of questions
+    //loops through each question in the list and checks if the user's selected answers is equal to correct answer
+    //if correct, num of answers increase by 1
+    //return num of correct answers
     private int getCorrectAnswers() {
         int correctAnswers = 0;
 
@@ -261,6 +270,9 @@ public class VB extends AppCompatActivity {
         return correctAnswers;
     }
 
+    //same thing, as getCorrectAnswers(), but checks if selected answer if not equal to correct answers
+    //if correct, num of incorrect answers increase by 1
+    //return num of incorrect answers
     private int getIncorrectAnswers() {
         int incorrectAnswers = 0;
 
@@ -275,6 +287,8 @@ public class VB extends AppCompatActivity {
         return incorrectAnswers;
     }
 
+    //handle back button
+    //when pressed, it cancels quiz and goes back to MainActivity
     @Override
     public void onBackPressed() {
 
@@ -285,6 +299,8 @@ public class VB extends AppCompatActivity {
         finish();
     }
 
+    //shows correct answers for current question
+    //hightlights correct answer by changing background color to green and its text color to white
     private void revealAnswer() {
         final String getAnswer = questions.get(currentQuestionPosition).getAnswer();
 

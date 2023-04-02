@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class BGMMyService extends Service {
+
+    // initialize MediaPlayer object
     MediaPlayer mediaPlayer;
 
     @Nullable
@@ -18,12 +20,15 @@ public class BGMMyService extends Service {
         return null;
     }
     @Override
+
     public void onCreate() {
         super.onCreate();
         mediaPlayer = MediaPlayer.create(this, R.raw.quiz_bgm);
         mediaPlayer.setLooping(true); // Set looping
         mediaPlayer.setVolume(100,100);
     }
+
+    // Start playing the music when service is started
     public int onStartCommand(Intent intent, int flags, int startId) {
         mediaPlayer.start();
         Toast.makeText(getApplicationContext(), "MUSIC ON",    Toast.LENGTH_SHORT).show();
@@ -31,6 +36,8 @@ public class BGMMyService extends Service {
     }
     public void onStart(Intent intent, int startId) {
     }
+
+    // Stop playing the music when service is stopped
     @Override
     public void onDestroy() {
         Toast.makeText(getApplicationContext(), "MUSIC OFF",    Toast.LENGTH_SHORT).show();
