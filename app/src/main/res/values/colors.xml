@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    // common colors
+    <color name="black">#FF000000</color>
+    <color name="grey">#aaa</color>
+    <color name="red">#B01E08</color>
+    <color name="cream">#E5EBDF</color>
+    <color name="green">#35C153</color>
+    <color name="yellow">#FFE156</color>
+    <color name="white">#FFFFFFFF</color>
+
+    // night theme
+    <color name="darkBlue">#1C3144</color>
+    <color name="darkBlue2">#174C76</color>
+    <color name="darkGrey">#ff424242</color>
+
+    // day theme
+    <color name="babyBlue">#D8DBEB</color>
+    <color name="babyBlue2">#A7B1EE</color>
+    <color name="lightpink">#E0BCC9</color>
+
+
+
+</resources>

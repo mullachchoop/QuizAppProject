@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".VB" android:orientation="vertical" android:contextClickable="true"
+        style="@style/ScreenBackground">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/SettingBackground"
+            android:id="@+id/linearLayout">
+        <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_back"
+                android:id="@+id/ic_back"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"/>
+        <TextView
+                android:text="VISUAL BASIC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_topic"
+                style="@style/TextOnBG"
+                android:textStyle="bold"
+                android:textSize="18sp" android:layout_centerInParent="true"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:gravity="center">
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_timer"
+                    android:id="@+id/ic_timer"
+                    android:layout_marginStart="15dp"/>
+            <TextView
+                    android:text="00:59"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_timer"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextOnBG"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+            android:text="1/5"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/txt_question"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/round_white_bg"
+            android:elevation="1dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+    <TextView
+            android:text="Question will come here..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/question"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:minHeight="100dp"
+            android:padding="20dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/round_question_text"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_opt1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:text="Option 1"
+            android:background="@drawable/round_white_bg"
+            android:textAllCaps="false"
+            android:textColor="#1F6BB8"
+            android:layout_marginEnd="20dp"
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_opt2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Option 2"
+            android:background="@drawable/round_white_bg"
+            android:textAllCaps="false"
+            android:textColor="#1F6BB8"
+            android:layout_marginEnd="20dp"
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_opt3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Option 3"
+            android:background="@drawable/round_white_bg"
+            android:textAllCaps="false"
+            android:textColor="#1F6BB8"
+            android:layout_marginEnd="20dp"
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_opt4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Option 4"
+            android:background="@drawable/round_white_bg"
+            android:textAllCaps="false"
+            android:textColor="#1F6BB8"
+            android:layout_marginEnd="20dp"
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:text="NEXT"
+            android:background="@drawable/round_green_bgstroke"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="20dp"
+    />
+
+</LinearLayout>
